@@ -25,6 +25,9 @@ jobs:
         provider: 'azurerm'
         command: 'validate'
         workingDirectory: '$(System.DefaultWorkingDirectory)/enviorment/dev'
+  - job:
+    displayName: 2nd job
+    steps:
     - task: TerraformTask@5
       displayName: terraform plan
       inputs:
