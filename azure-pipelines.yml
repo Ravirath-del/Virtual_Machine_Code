@@ -27,6 +27,7 @@ jobs:
         workingDirectory: '$(System.DefaultWorkingDirectory)/enviorment/dev'
   - job:
     displayName: 2nd job
+    dependsOn: 1st job
     steps:
     - task: TerraformTask@5
       displayName: terraform plan
