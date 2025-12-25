@@ -30,6 +30,17 @@ jobs:
     dependsOn: init_stage
     steps:
     - task: TerraformTask@5
+      displayName: terraform init
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        commandOptions: '-upgrade=false'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/enviorment/dev'
+        backendServiceArm: 'pipeservice'
+        backendAzureRmStorageAccountName: 'ravindrastg322'
+        backendAzureRmContainerName: 'ravindracontainer'
+        backendAzureRmKey: 'terraform.tfstate'
+    - task: TerraformTask@5
       displayName: terraform plan
       inputs:
         provider: 'azurerm'
