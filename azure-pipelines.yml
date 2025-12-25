@@ -1,7 +1,7 @@
 trigger: none
 pool: Ravindranewpipeline
 jobs: 
-  - job: 
+  - job: init_stage
     displayName: 1st job
     steps: 
     - task: TerraformInstaller@1
@@ -27,7 +27,7 @@ jobs:
         workingDirectory: '$(System.DefaultWorkingDirectory)/enviorment/dev'
   - job:
     displayName: 2nd job
-    dependsOn: 1st job
+    dependsOn: init_stage
     steps:
     - task: TerraformTask@5
       displayName: terraform plan
