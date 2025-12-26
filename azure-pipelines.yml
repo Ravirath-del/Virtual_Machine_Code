@@ -1,13 +1,19 @@
 trigger: none
+
 pool: Ravindranewpipeline
-jobs: 
+
+stages:
+- stage: init_to_plan
+  displayName: init se plan tak
+  jobs:
   - job: init_stage
     displayName: 1st job
-    steps: 
+    steps:
     - task: TerraformInstaller@1
       displayName: terraform install
       inputs:
         terraformVersion: 'latest'
+
     - task: TerraformTask@5
       displayName: terraform init
       inputs:
@@ -19,13 +25,15 @@ jobs:
         backendAzureRmStorageAccountName: 'ravindrastg322'
         backendAzureRmContainerName: 'ravindracontainer'
         backendAzureRmKey: 'terraform.tfstate'
+
     - task: TerraformTask@5
       displayName: terraform validate
       inputs:
         provider: 'azurerm'
         command: 'validate'
         workingDirectory: '$(System.DefaultWorkingDirectory)/enviorment/dev'
-  - job:
+
+  - job: plan_stage
     displayName: 2nd job
     dependsOn: init_stage
     steps:
@@ -40,6 +48,7 @@ jobs:
         backendAzureRmStorageAccountName: 'ravindrastg322'
         backendAzureRmContainerName: 'ravindracontainer'
         backendAzureRmKey: 'terraform.tfstate'
+
     - task: TerraformTask@5
       displayName: terraform plan
       inputs:
