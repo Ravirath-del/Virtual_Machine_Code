@@ -66,3 +66,4 @@ stages:
     - task: tfsec@1
       inputs:
         version: 'v1.26.0'
+        dir: '''$(System.DefaultWorkingDirectory)/enviorment/dev'''
