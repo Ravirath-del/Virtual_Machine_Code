@@ -43,4 +43,4 @@ stages:
         - task: tfsec@1
           displayName: tfsec install
           inputs:
-            version: 'custom'
+            version: 'v.1.26.0'
