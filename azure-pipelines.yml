@@ -1,0 +1,25 @@
+trigger: none
+pool: Infrapipeline
+stages:
+  - stage: terraform_install_validate
+    jobs:
+      - job: intall_jobs
+        displayName: install to validate
+        steps:
+        - task: TerraformInstaller@1
+          displayName: terraform install
+          inputs:
+            terraformVersion: 'latest'
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'custom'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/enviorment/dev'
+            outputTo: 'console'
+            customCommand: 'fmt'
+            environmentServiceNameAzureRM: 'Infrapipelineserviceconnection'
+        - task: TerraformTask@5
+          inputs:
+            provider: 'azurerm'
+            command: 'validate'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/enviorment/dev'
