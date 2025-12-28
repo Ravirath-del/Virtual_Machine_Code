@@ -22,7 +22,7 @@ stages:
             backendAzureRmContainerName: 'ravindracontainer'
             backendAzureRmKey: 'terraform.tfstate'
         - task: TerraformTask@5
-          displayName: terraform init
+          displayName: terraform fmt
           inputs:
             provider: 'azurerm'
             command: 'custom'
@@ -36,3 +36,11 @@ stages:
             provider: 'azurerm'
             command: 'validate'
             workingDirectory: '$(System.DefaultWorkingDirectory)/enviorment/dev'
+  - stage: scanning_tool
+    jobs:
+      - job: scanning_tool
+        steps:
+        - task: tfsec@1
+          inputs:
+            version: 'v1.26.0'
+            dir: '''$(System.DefaultWorkingDirectory)/enviorment/dev'''
