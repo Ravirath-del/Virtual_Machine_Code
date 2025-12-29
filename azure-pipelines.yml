@@ -46,10 +46,22 @@ stages:
     steps:
       - script: C:\tfsec\tfsec.exe $(System.DefaultWorkingDirectory)/enviorment/dev
         displayName: tfsec scan
+
   - job: infracost
     displayName: infracost
     steps:
-      - script: .\tools\infracost.exe breakdown --path=enviorment/dev --format=table
-          env:IC_API_KEY $(IC_API_KEY)
+    - task: InfracostSetup@2
+      inputs:
+        apiKey: 'ico-UKZo9bNI21s4QnT2ajdK1VZwKU0Ov6SF'
+        version: '0.10.x'
 
+    - task: CmdLine@2
+      displayName: Infra Cost Breakdown
+      inputs:
+        script: |
+          infracost breakdown --path=. --format=table
+              workingDirectory: '$(System.DefaultWorkingDirectory)/enviorment/dev'
+            env:
+              INFRACOST_API_KEY: 'ico-UKZo9bNI21s4QnT2ajdK1VZwKU0Ov6SF'
+          
 
