@@ -49,7 +49,9 @@ stages:
   - job: infracost
     displayName: infracost
     steps:
-    - script: C:\infracost\infracost.exe breakdown --path $(System.DefaultWorkingDirectory)/enviorment/dev
-      displayName: Infracost breakdown
+    - script: |
+        infracost breakdown \--path=enviorment/dev \--format=table
+      displayName: Infracost cost breakdown
       env:
-        IC_API_KEY: $(IC_API_KEY)
+       IC_API_KEY: 'ico-UKZo9bNI21s4QnT2ajdK1VZwKU0Ov6SF'
+
