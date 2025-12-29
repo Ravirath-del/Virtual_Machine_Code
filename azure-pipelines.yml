@@ -40,5 +40,5 @@ stages:
     jobs:
       - job: scanning_tool
         steps:
-        - script: C:\tfsec\tfsec.exe .
+        - script: C:\tfsec\tfsec.exe '$(System.DefaultWorkingDirectory)/enviorment/dev'
         displayName: Run tfsec (absolute path)
