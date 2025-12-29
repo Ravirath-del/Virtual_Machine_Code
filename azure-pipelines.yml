@@ -1,4 +1,8 @@
 trigger: none
+variables:
+- name: INFRACOST_API_KEY
+  value: $(INFRACOST_API_KEY)
+
 
 pool: Infrapipeline
 
