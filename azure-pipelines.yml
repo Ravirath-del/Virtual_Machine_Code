@@ -25,6 +25,7 @@ stages:
         backendAzureRmContainerName: 'ravindracontainer'
         backendAzureRmKey: 'terraform.tfstate'
     - task: TerraformTask@5
+      displayName: terraform fmt
       inputs:
         provider: 'azurerm'
         command: 'custom'
@@ -46,22 +47,36 @@ stages:
     steps:
       - script: C:\tfsec\tfsec.exe $(System.DefaultWorkingDirectory)/enviorment/dev
         displayName: tfsec scan
-
-  - job: infracost
-    displayName: infracost
+- stage: terraform_plan
+  jobs:
+  - job: terraform_plan
     steps:
-    - task: InfracostSetup@2
+    - task: TerraformTask@5
+      displayName: terraform init
       inputs:
-        apiKey: 'ico-UKZo9bNI21s4QnT2ajdK1VZwKU0Ov6SF'
-        version: '0.10.x'
-
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/enviorment/dev'
+        backendServiceArm: 'Infrapipelineserviceconnection'
+        backendAzureRmResourceGroupName: 'Ravindra_pipelinerg'
+        backendAzureRmStorageAccountName: 'ravindrastg322'
+        backendAzureRmContainerName: 'ravindracontainer'
+        backendAzureRmKey: 'terraform.tfstate'
+    - task: TerraformTask@5
+      displayName: terraform_plan
+      inputs:
+        provider: 'azurerm'
+        command: 'plan'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/enviorment/dev'
+        commandOptions: '-out=tfplan'
+        environmentServiceNameAzureRM: 'Infrapipelineserviceconnection'
     - task: CmdLine@2
-      displayName: Infra Cost Breakdown
+      displayName: Infracost cost breakdown
       inputs:
         script: |
-          infracost breakdown --path=. --format=table
-              workingDirectory: '$(System.DefaultWorkingDirectory)/enviorment/dev'
-            env:
-              INFRACOST_API_KEY: 'ico-UKZo9bNI21s4QnT2ajdK1VZwKU0Ov6SF'
-          
+          echo Running Infracost...
+          set INFRACOST_API_KEY=$(INFRACOST_API_KEY)
 
+          C:\infracost\infracost.exe breakdown ^
+            --path=$(System.DefaultWorkingDirectory)/enviorment/dev ^
+            --format table
