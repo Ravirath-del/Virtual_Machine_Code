@@ -25,13 +25,11 @@ stages:
         backendAzureRmContainerName: 'ravindracontainer'
         backendAzureRmKey: 'terraform.tfstate'
     - task: TerraformTask@5
-      displayName: terraform fmt
       inputs:
         provider: 'azurerm'
         command: 'custom'
-        workingDirectory: '$(System.DefaultWorkingDirectory)/enviorment/dev'
-        customCommand: 'fmt'
-
+        outputTo: 'console'
+        environmentServiceNameAzureRM: 'Infrapipelineserviceconnection'
     - task: TerraformTask@5
       displayName: terraform validate
       inputs:
