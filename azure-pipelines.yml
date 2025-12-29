@@ -49,7 +49,5 @@ stages:
   - job: tflint
     displayName: Run tflint
     steps:
-    - task: InfracostSetup@2
-      inputs:
-        apiKey: 'INFRACOST_API_KEY'
-        version: '0.10.x'
+    - script: C:\infracost\infracost.exe breakdown --path $(System.DefaultWorkingDirectory)/enviorment/dev
+      displayName: Infracost breakdown
