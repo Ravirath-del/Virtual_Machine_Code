@@ -46,8 +46,10 @@ stages:
     steps:
       - script: C:\tfsec\tfsec.exe $(System.DefaultWorkingDirectory)/enviorment/dev
         displayName: tfsec scan
-  - job: tflint
-    displayName: Run tflint
+  - job: infracost
+    displayName: infracost
     steps:
     - script: C:\infracost\infracost.exe breakdown --path $(System.DefaultWorkingDirectory)/enviorment/dev
       displayName: Infracost breakdown
+      env:
+        IC_API_KEY: $(IC_API_KEY)
