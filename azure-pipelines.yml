@@ -46,4 +46,10 @@ stages:
     steps:
       - script: C:\tfsec\tfsec.exe $(System.DefaultWorkingDirectory)/enviorment/dev
         displayName: tfsec scan
-    
+  - job: tflint
+    displayName: Run tflint
+    steps:
+    - task: InfracostSetup@2
+      inputs:
+        apiKey: 'INFRACOST_API_KEY'
+        version: '0.10.x'
