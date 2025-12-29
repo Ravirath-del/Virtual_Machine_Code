@@ -41,6 +41,6 @@ stages:
       - job: scanning_tool
         steps:
         - task: tfsec@1
-          displayName: tfsec install
           inputs:
-            version: 'v.1.26.0'
+            version: 'v1.26.0'
+            dir: 'C:\tfsec'
