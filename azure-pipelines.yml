@@ -24,7 +24,6 @@ stages:
         backendAzureRmStorageAccountName: 'ravindrastg322'
         backendAzureRmContainerName: 'ravindracontainer'
         backendAzureRmKey: 'terraform.tfstate'
-
     - task: TerraformTask@5
       displayName: terraform fmt
       inputs:
