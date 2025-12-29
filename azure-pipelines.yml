@@ -71,6 +71,16 @@ stages:
         commandOptions: '-out=tfplan'
         environmentServiceNameAzureRM: 'Infrapipelineserviceconnection'
     - task: CmdLine@2
+      displayName: Debug Infracost API key
+      inputs:
+        script: |
+          if "%INFRACOST_API_KEY%"=="" (
+            echo ❌ API KEY IS EMPTY
+            exit /b 1
+          ) else (
+            echo ✅ API KEY IS PRESENT
+          )
+    - task: CmdLine@2
       displayName: Infracost cost breakdown
       inputs:
         script: |
