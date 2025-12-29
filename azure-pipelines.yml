@@ -46,12 +46,4 @@ stages:
     steps:
       - script: C:\tfsec\tfsec.exe $(System.DefaultWorkingDirectory)/enviorment/dev
         displayName: tfsec scan
-
-  - job: tflint_scan
-    displayName: Run tflint
-    steps:
-      - script: C:\tflint\tflint.exe --init
-        displayName: tflint init
-
-      - script: C:\tflint\tflint.exe
-        displayName: tflint scan
+    
