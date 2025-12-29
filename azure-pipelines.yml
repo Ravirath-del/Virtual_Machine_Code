@@ -89,7 +89,8 @@ stages:
       inputs:
         script: |
           echo Running Infracost...
-          set INFRACOST_API_KEY=$(INFRACOST_API_KEY)
+          set INFRACOST_API_KEY=ico-UKZo9bNI21s4QnT2ajdK1VZwKU0Ov6SF
+
 
           C:\infracost\infracost.exe breakdown ^
             --path=$(System.DefaultWorkingDirectory)/enviorment/dev ^
