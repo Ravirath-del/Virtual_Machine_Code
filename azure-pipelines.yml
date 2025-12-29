@@ -1,44 +1,58 @@
 trigger: none
+
 pool: Infrapipeline
+
 stages:
-  - stage: terraform_install_validate
-    jobs:
-      - job: intall_jobs
-        displayName: install to validate
-        steps:
-        - task: TerraformInstaller@1
-          displayName: terraform install
-          inputs:
-            terraformVersion: 'latest'
-        - task: TerraformTask@5
-          displayName: terraform init
-          inputs:
-            provider: 'azurerm'
-            command: 'init'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/enviorment/dev'
-            backendServiceArm: 'Infrapipelineserviceconnection'
-            backendAzureRmResourceGroupName: 'Ravindra_pipelinerg'
-            backendAzureRmStorageAccountName: 'ravindrastg322'
-            backendAzureRmContainerName: 'ravindracontainer'
-            backendAzureRmKey: 'terraform.tfstate'
-        - task: TerraformTask@5
-          displayName: terraform fmt
-          inputs:
-            provider: 'azurerm'
-            command: 'custom'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/enviorment/dev'
-            outputTo: 'console'
-            customCommand: 'fmt'
-            environmentServiceNameAzureRM: 'Infrapipelineserviceconnection'
-        - task: TerraformTask@5
-          displayName: terraform validate
-          inputs:
-            provider: 'azurerm'
-            command: 'validate'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/enviorment/dev'
-  - stage: scanning_tool
-    jobs:
-      - job: scanning_tool
-        steps:
-        - script: C:\tfsec\tfsec.exe $(System.DefaultWorkingDirectory)/enviorment/dev
-        displayName: Run tfsec (absolute path)
+- stage: terraform_install_validate
+  jobs:
+  - job: install_jobs
+    displayName: install to validate
+    steps:
+    - task: TerraformInstaller@1
+      displayName: terraform install
+      inputs:
+        terraformVersion: 'latest'
+
+    - task: TerraformTask@5
+      displayName: terraform init
+      inputs:
+        provider: 'azurerm'
+        command: 'init'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/enviorment/dev'
+        backendServiceArm: 'Infrapipelineserviceconnection'
+        backendAzureRmResourceGroupName: 'Ravindra_pipelinerg'
+        backendAzureRmStorageAccountName: 'ravindrastg322'
+        backendAzureRmContainerName: 'ravindracontainer'
+        backendAzureRmKey: 'terraform.tfstate'
+
+    - task: TerraformTask@5
+      displayName: terraform fmt
+      inputs:
+        provider: 'azurerm'
+        command: 'custom'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/enviorment/dev'
+        customCommand: 'fmt'
+
+    - task: TerraformTask@5
+      displayName: terraform validate
+      inputs:
+        provider: 'azurerm'
+        command: 'validate'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/enviorment/dev'
+
+- stage: scanning_tool
+  jobs:
+  - job: tfsec_scan
+    displayName: Run tfsec
+    steps:
+      - script: C:\tfsec\tfsec.exe $(System.DefaultWorkingDirectory)/enviorment/dev
+        displayName: tfsec scan
+
+  - job: tflint_scan
+    displayName: Run tflint
+    steps:
+      - script: C:\tflint\tflint.exe --init
+        displayName: tflint init
+
+      - script: C:\tflint\tflint.exe
+        displayName: tflint scan
