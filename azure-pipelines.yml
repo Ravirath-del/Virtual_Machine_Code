@@ -1,8 +1,6 @@
 trigger: none
 variables:
-- name: INFRACOST_API_KEY
-  value: $(INFRACOST_API_KEY)
-
+- group: New variable group 29-Dec
 
 pool: Infrapipeline
 
@@ -89,7 +87,7 @@ stages:
       inputs:
         script: |
           echo Running Infracost...
-          set INFRACOST_API_KEY=ico-UKZo9bNI21s4QnT2ajdK1VZwKU0Ov6SF
+          set INFRACOST_API_KEY=$(INFRACOST_API_KEY)
 
 
           C:\infracost\infracost.exe breakdown ^
