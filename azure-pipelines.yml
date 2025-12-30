@@ -83,13 +83,13 @@ stages:
 #            echo ✅ API KEY IS PRESENT
  #         )
     # 🧪 ENV DUMP (TEMP – remove later)
-    - task: CmdLine@2
-      displayName: Dump env vars (test)
-      env:
-        INFRACOST_API_KEY: $(INFRACOST_API_KEY)
-      inputs:
-        script: |
-          set INFRACOST
+ #   - task: CmdLine@2
+#      displayName: Dump env vars (test)
+#      env:
+#       INFRACOST_API_KEY: $(INFRACOST_API_KEY)
+#      inputs:
+#        script: |
+#          set INFRACOST
 
     # 💰 INFRACOST
     - task: CmdLine@2
