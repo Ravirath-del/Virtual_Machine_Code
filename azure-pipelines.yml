@@ -82,14 +82,23 @@ stages:
           ) else (
             echo ✅ API KEY IS PRESENT
           )
+    # 🧪 ENV DUMP (TEMP – remove later)
+    - task: CmdLine@2
+      displayName: Dump env vars (test)
+      env:
+        INFRACOST_API_KEY: $(INFRACOST_API_KEY)
+      inputs:
+        script: |
+          set INFRACOST
+
+    # 💰 INFRACOST
     - task: CmdLine@2
       displayName: Infracost cost breakdown
+      env:
+        INFRACOST_API_KEY: $(INFRACOST_API_KEY)
       inputs:
         script: |
           echo Running Infracost...
-          set INFRACOST_API_KEY=$(INFRACOST_API_KEY)
-
-
           C:\infracost\infracost.exe breakdown ^
             --path=$(System.DefaultWorkingDirectory)/enviorment/dev ^
             --format table
