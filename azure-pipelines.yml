@@ -72,16 +72,16 @@ stages:
         workingDirectory: '$(System.DefaultWorkingDirectory)/enviorment/dev'
         commandOptions: '-out=tfplan'
         environmentServiceNameAzureRM: 'Infrapipelineserviceconnection'
-    - task: CmdLine@2
-      displayName: Debug Infracost API key
-      inputs:
-        script: |
-          if "%INFRACOST_API_KEY%"=="" (
-            echo ❌ API KEY IS EMPTY
-            exit /b 1
-          ) else (
-            echo ✅ API KEY IS PRESENT
-          )
+#    - task: CmdLine@2
+ #     displayName: Debug Infracost API key
+#      inputs:
+#        script: |
+#          if "%INFRACOST_API_KEY%"=="" (
+#            echo ❌ API KEY IS EMPTY
+ #           exit /b 1
+##          ) else (
+#            echo ✅ API KEY IS PRESENT
+ #         )
     # 🧪 ENV DUMP (TEMP – remove later)
     - task: CmdLine@2
       displayName: Dump env vars (test)
