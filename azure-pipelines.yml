@@ -102,3 +102,10 @@ stages:
           C:\infracost\infracost.exe breakdown ^
             --path=$(System.DefaultWorkingDirectory)/enviorment/dev ^
             --format table
+    - task: TerraformTask@5
+      displayName: terraform apply
+      inputs:
+        provider: 'azurerm'
+        command: 'apply'
+        workingDirectory: '$(System.DefaultWorkingDirectory)/enviorment/dev'
+        environmentServiceNameAzureRM: 'Infrapipelineserviceconnection'
